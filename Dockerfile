@@ -29,6 +29,7 @@ EXPOSE 7199 7000 7001 9160 9042
 
 WORKDIR /opt/cassandra
 
+ENV PATH /opt/cassandra/bin:$PATH
 CMD ["/sbin/my_init"]
 
 # Clean up
