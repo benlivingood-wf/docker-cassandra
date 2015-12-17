@@ -27,6 +27,10 @@ RUN	\
 # Expose ports
 EXPOSE 7199 7000 7001 9160 9042
 
+#install python and update PATH
+RUN apt-get update && apt-get install -y python2.7
+ENV PATH /opt/cassandra/bin:$PATH
+
 WORKDIR /opt/cassandra
 
 CMD ["/sbin/my_init"]
