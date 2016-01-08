@@ -1,17 +1,17 @@
-Cassandra 2.1.5 as a Docker container. For development use only.  
+Cassandra 2.1.12 as a Docker container. For development use only.
 
 ## Quickstart
 
 ### TL;DR
 
-Paste this into your terminal to start a 5 node cluster with OpsCenter:  
+Paste this into your terminal to start a 5 node cluster with OpsCenter:
 
 ```
 bash <(curl -sL http://bit.ly/docker-cassandra)
 ```
 
 OR, if you don't trust the one-liner, here are its contents:
-  
+
 ```
 #!/bin/bash
 docker pull abh1nav/opscenter:latest
@@ -51,8 +51,8 @@ echo "Go to http://$OPS_IP:8888/"
 ### OpsCenter
 Skip this section if you don't want to run OpsCenter.
 
-Pull the image and launch OpsCenter.  
-  
+Pull the image and launch OpsCenter.
+
 ```
 docker pull abh1nav/cassandra:latest
 docker run -d --name opscenter abh1nav/opscenter:latest
@@ -65,43 +65,43 @@ OPS_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' opscenter)
 ```
 
 ### Single Node
-Pull the image.  
-  
+Pull the image.
+
 ```
 docker pull abh1nav/cassandra:latest
 ```
-  
-Launch the node  
-  
-  - without OpsCenter:  
-  
+
+Launch the node
+
+  - without OpsCenter:
+
 ```
 docker run -d --name cass1 abh1nav/cassandra:latest
 ```
-  
-  - with OpsCenter:  
-  
+
+  - with OpsCenter:
+
 ```
 docker run -d --name cass1 -e OPS_IP=$OPS_IP abh1nav/cassandra:latest
 ```
-  
-Grab the seed node's IP using:  
-  
+
+Grab the seed node's IP using:
+
 ```
 SEED_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' cass1)
 ```
-  
-Connect to it using CQLSH:  
-  
+
+Connect to it using CQLSH:
+
 ```
 cqlsh $SEED_IP
 ```
-  
+
 ### Multiple Nodes
-  
-Follow the single node setup to get the first node running and keep track of its IP. Run the following to launch the other nodes in the cluster:  
-  - without OpsCenter:  
-  
+
+Follow the single node setup to get the first node running and keep track of its IP. Run the following to launch the other nodes in the cluster:
+  - without OpsCenter:
+
 ```
 for name in cass{2..5}; do
   echo "Starting node $name"
@@ -109,9 +109,9 @@ for name in cass{2..5}; do
   sleep 30
 done
 ```
-  
-  - with OpsCenter:  
-  
+
+  - with OpsCenter:
+
 ```
 for name in cass{2..5}; do
   echo "Starting node $name"
@@ -119,11 +119,11 @@ for name in cass{2..5}; do
   sleep 30
 done
 ```
-  
-Once all the nodes are up, check cluster status using:  
-  
+
+Once all the nodes are up, check cluster status using:
+
 ```
 nodetool --host $SEED_IP status
 ```
-  
+
 or, if you installed OpsCenter, go to `http://$OPS_IP:8888` and choose the "Add Existing Cluster option".
